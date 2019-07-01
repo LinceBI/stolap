@@ -1,0 +1,161 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+		
+<!--
+ Parameters 
+  parameterRenderFormatHandler
+  parameterDialogWidgetVar
+-->
+		
+<style>
+
+	.formulaConditionalRenderFormats {
+		width: 100%;
+	}
+	
+	.formulaConditionalRenderFormats .ui-orderlist-list {
+		width: 100%;
+		height: 100px;
+	}
+	
+	.formulaConditionalRenderFormats th {
+		background: #E4E4E4;
+	}
+
+	.formulaAddConditionalFormat {
+		margin-bottom: 5px;
+	}
+
+</style>               
+		
+		<p:dialog position="" header="Formato" id="dlgRenderFormat"  widgetVar="#{parameterDialogWidgetVar}" modal="true" closeOnEscape="true" width="850" height="350"
+				closable="true" resizable="true" dynamic="true" showEffect="fade" hideEffect="fade" styleClass="cubeSelectionDialog">
+
+		        <h:outputLabel for="applyFormat" value="#{msg['stpivot4.label.applySpecificFormat']} " />
+		        <p:selectBooleanCheckbox id="applyFormat" value="#{parameterRenderFormatHandler.applyFormat}">
+		            <p:ajax update="panelRenderFormat" />
+		        </p:selectBooleanCheckbox>
+		        
+		        <p:outputPanel id="panelRenderFormat" >
+					<h:panelGrid columns="6" cellpadding="2" width="100%">
+	
+						<p:outputLabel for="defaultFormatString" value="#{msg['stpivot4.label.defaultFormat']}: " />
+						<p:selectOneMenu id="defaultFormatString" value="#{parameterRenderFormatHandler.defaultFormatString}" editable="true" disabled="#{!parameterRenderFormatHandler.applyFormat}">
+				            <f:selectItems value="#{parameterRenderFormatHandler.formatStrings}" />
+				        </p:selectOneMenu>
+	
+				        <p:outputLabel for="defaultColorFG" value="#{msg['properties.category.color']}: " />
+						<p:colorPicker id="defaultColorFG" value="#{parameterRenderFormatHandler.defaultColorFG}" rendered="#{parameterRenderFormatHandler.applyFormat}" />
+	
+						<p:selectOneMenu value="#{parameterRenderFormatHandler.defaultArrow}" disabled="#{!parameterRenderFormatHandler.applyFormat}">
+				            <f:selectItem noSelectionOption="true" itemLabel="(none)" itemValue="" />
+				            <f:selectItems value="#{parameterRenderFormatHandler.availableArrows}" />
+				        </p:selectOneMenu>
+						
+						<p:inputText type="url" size="40" value="#{parameterRenderFormatHandler.defaultLink}" placeholder="#{msg['properties.link']}" disabled="#{!parameterRenderFormatHandler.applyFormat}" />
+										
+					</h:panelGrid>
+				
+					<h3><h:outputText value="#{msg['stpivot4.label.conditionalFormatIif']}" /></h3>
+					
+					<p:commandButton id="formulaAddConditionalFormat" process="@this" value="#{msg['stpivot4.label.addConditionalFormat']}" update="formulaConditionalRenderFormats" styleClass="formulaAddConditionalFormat bgcolor-gray" actionListener="#{parameterRenderFormatHandler.addConditionalFormat}" disabled="#{!parameterRenderFormatHandler.applyFormat}" />
+
+				    <p:dataTable id="formulaConditionalRenderFormats" styleClass="formulaConditionalRenderFormats" editable="#{parameterRenderFormatHandler.applyFormat}" editMode="cell" draggableRows="true" value="#{parameterRenderFormatHandler.conditionalRenderFormats}" disabled="#{!parameterRenderFormatHandler.applyFormat}"
+				    var="conditionalRenderFormat" >
+				    
+				        <p:column headerText="#{msg['stpivot4.label.condition']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{conditionalRenderFormat.comparisonOperator}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:selectOneMenu value="#{conditionalRenderFormat.comparisonOperator}" style="width: 100%" >
+							            <f:selectItems value="#{parameterRenderFormatHandler.comparisonOperators}" />
+							        </p:selectOneMenu>
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+
+				        <p:column headerText="#{msg['stpivot4.label.conditionValue']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{conditionalRenderFormat.comparisonValue}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:inputText type="number" placeholder="#{msg['stpivot4.label.valueToCompare']}" value="#{conditionalRenderFormat.comparisonValue}" style="width: 100%" />  
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+						
+				        <p:column headerText="#{msg['stpivot4.label.format']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{conditionalRenderFormat.formatString}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:selectOneMenu value="#{conditionalRenderFormat.formatString}" editable="true" style="width: 100%">
+										<f:selectItems value="#{parameterRenderFormatHandler.formatStrings}" />
+									</p:selectOneMenu>
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+	
+				        <p:column headerText="#{msg['properties.category.color']}">
+				            <p:cellEditor >
+				               <f:facet name="output">
+									<h:outputText value="Color ##{conditionalRenderFormat.fgColor}" style="color:##{conditionalRenderFormat.fgColor}"   />
+									<h:outputScript>$('.ui-colorpicker-container').hide();</h:outputScript>
+				               </f:facet>
+				               <f:facet name="input">
+									<p:colorPicker value="#{conditionalRenderFormat.fgColor}" />
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+
+				        <p:column headerText="#{msg['stpivot4.label.signo']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{msg['stpivot4.label.signo']}" styleClass="arrowsign #{conditionalRenderFormat.arrowSignClass}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:selectOneMenu value="#{conditionalRenderFormat.arrowSignClass}" style="width: 100%">
+										<f:selectItem noSelectionOption="true" itemLabel="(none)" itemValue="" />
+										<f:selectItems value="#{parameterRenderFormatHandler.availableArrows}" />
+									</p:selectOneMenu>
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+				        
+				        <p:column headerText="#{msg['properties.link']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{conditionalRenderFormat.link}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:inputText type="url" value="#{conditionalRenderFormat.link}" placeholder="Enlace url" style="width: 100%" />
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+				 
+				        <p:column width="20">
+							<p:commandButton process="@this" update="formulaConditionalRenderFormats" icon="ui-icon-trash" action="#{parameterRenderFormatHandler.removeRenderFormat}" disabled="#{!parameterRenderFormatHandler.applyFormat}" >
+					            <f:setPropertyActionListener value="#{conditionalRenderFormat.id}" target="#{parameterRenderFormatHandler.renderFormatToRemove}" />
+							</p:commandButton>
+				        </p:column>
+				 
+				    </p:dataTable >			
+		        </p:outputPanel>
+						
+
+				<f:facet name="footer">
+					<p:commandButton value="#{msg['button.close']}" styleClass="bgcolor-red" icon="ui-icon-close" actionListener="#{parameterRenderFormatHandler.handleClose}" onclick="PF('#{parameterDialogWidgetVar}').hide()" />
+				</f:facet>
+				
+		</p:dialog>	
+		
+		
+</ui:composition>

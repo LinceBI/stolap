@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+<style>
+
+	#whatif-form\:wiifAddWhatIfMember {
+		margin-bottom: 5px;
+	}
+
+	#whatif-form\:whatIfEditMembers .ui-spinner {
+		width: 100%;
+	}
+
+	#whatif-form\:whatIfEditMembers .ui-spinner input {
+		width: 89%;
+		padding-left: 0;
+		padding-right: 0;
+	}
+</style>               
+	
+	<h:form id="whatif-form">
+		<p:dialog id="whatIfDialog" header="#{msg['stpivot4.title.whatIf']}"
+			widgetVar="whatIfDialog" modal="true" width="930" height="305"
+			closable="true" resizable="true" dynamic="true"
+			styleClass="whatIfDialog" showEffect="fade" hideEffect="fade">
+			
+			<p:ajax event="close" listener="#{whatIfHandler.handleClose}" update=":whatif-form"/>
+			
+			<p:layout id="layout" style="height: 100%;">
+				
+				<p:layoutUnit position="center" >
+
+					<p:commandButton id="wiifAddWhatIfMember" process="@this" value="#{msg['stpivot4.label.addWhatIfMember']}" update="whatIfEditMembers" styleClass="bgcolor-gray" actionListener="#{whatIfHandler.addWhatIfMember}"  />
+
+				    <p:dataTable id="whatIfEditMembers" editable="true" editMode="cell" value="#{whatIfHandler.whatIfMembers}" var="whatIfMember" >
+				    
+				        <p:column headerText="#{msg['label.name']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{whatIfMember.name}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:inputText placeholder="#{msg['label.name']}" required="true" value="#{whatIfMember.name}" style="width: 100%" />  
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+						
+				        <p:column headerText="#{msg['stpivot4.label.measure']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{whatIfMember.measureUniqueName}" />
+				               </f:facet>
+				               <f:facet name="input">
+									<p:selectOneMenu required="true" value="#{whatIfMember.measureUniqueName}" editable="true" style="width: 100%">
+										<f:selectItems value="#{whatIfHandler.measures}" />
+									</p:selectOneMenu>
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+	
+				        <p:column headerText="#{msg['stpivot4.label.applyPercentage']}" >
+				            <p:cellEditor>
+				               <f:facet name="output">
+									<h:outputText value="#{whatIfMember.percentage}" />
+				               </f:facet>
+				               <f:facet name="input">
+				               		<div style="padding: 3px;">
+				               			<p:spinner id="wifmPercentage"  value="#{whatIfMember.percentage}"   />
+        							</div>
+				               	</f:facet>
+				           </p:cellEditor>
+				        </p:column>
+
+				        <p:column>
+							<p:commandButton id="whatifButtonFormato" value="#{msg['stpivot4.label.format']}" 
+								oncomplete="PF('whatIfMeasureFormatDialog').show();" 
+								action="#{whatIfHandler.loadRenderFormats}"
+								update=":whatif-form:dlgRenderFormat"
+								styleClass="bgcolor-gray" >
+								
+					            <f:setPropertyActionListener value="#{whatIfMember}" target="#{whatIfHandler.whatIfMemberToLoadRenderFormats}" />
+								
+							</p:commandButton>
+				        </p:column>
+
+
+				        <p:column width="20">
+							<p:commandButton process="@this" update="whatIfEditMembers" icon="ui-icon-trash" action="#{whatIfHandler.removeWhatIfMember}" >
+					            <f:setPropertyActionListener value="#{whatIfMember}" target="#{whatIfHandler.whatIfMemberToRemove}" />
+							</p:commandButton>
+				        </p:column>
+				 
+				    </p:dataTable >			
+
+
+				</p:layoutUnit>
+				
+			</p:layout>
+
+
+			<f:facet name="footer">
+				<h:panelGroup id="button-bar" styleClass="ui-dialog-buttonpane"
+					layout="block">
+					<p:messages showDetail="true" closable="true" />
+					
+					<p:commandButton value="#{msg['button.ok']}" icon="ui-icon-check" styleClass="bgcolor-green"
+						actionListener="#{whatIfHandler.apply}"
+						update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+						oncomplete="if (checkNoEditingRow() &amp;&amp; args &amp;&amp; !args.validationFailed) {onViewChanged(); PF('whatIfDialog').hide(); }" />
+						
+					<p:commandButton value="#{msg['button.apply']}"
+					    id="wifApplyButton"
+						icon="ui-icon-check" styleClass="bgcolor-blue" 
+						actionListener="#{whatIfHandler.apply}"
+						update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+						oncomplete="if (args &amp;&amp; !args.validationFailed) {if (!checkNoEditingRow()) {$('#whatif-form\\:wifApplyButton').click();} onViewChanged()}" />
+						
+					<p:commandButton value="#{msg['button.close']}" styleClass="bgcolor-red"
+						icon="ui-icon-close"
+						onclick="PF('whatIfDialog').hide();" />
+						
+						
+					<h:outputScript>
+						function checkNoEditingRow() {
+							return $('.whatIfDialog .ui-cell-editor-input').is(':visible')==false; 
+						}
+					
+					</h:outputScript>
+				</h:panelGroup>
+			</f:facet>
+
+		</p:dialog>
+		
+		<p:outputPanel id="whatifRenderFormatDlg">
+	    <ui:include src="/measureRenderFormat.xhtml">
+				<ui:param name="parameterRenderFormatHandler" value="#{whatIfHandler.renderFormatHandler}" />
+				<ui:param name="parameterDialogWidgetVar" value="whatIfMeasureFormatDialog" />
+		</ui:include>
+		</p:outputPanel>
+		
+	</h:form>
+		
+</ui:composition>

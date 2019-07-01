@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="stpivot4" title="stpivot4" loader="OVERRIDING">
+	<static-paths>
+		<static-path url="/stpivot4" localFolder="webapp" />
+	</static-paths>
+
+	<overlays>
+		<overlay id="launch" resourcebundle="api/repos/stpivot4/webapp/resources/pivot4j/i18n/messages.properties">
+			<button id="launch_new_stpivot4_analytics" image="api/repos/stpivot4/webapp/resources/pivot4j/images/new-report.png"
+				command="Home.openFile('STPivot4 View','STPivot4 View', 'plugin/stpivot4/faces/catalog.xhtml');$('#btnCreateNew').popover('hide')"
+				label="STPivot4 View" />
+		</overlay>
+
+		<overlay id="startup.stpivot4" resourcebundle="api/repos/stpivot4/webapp/resources/pivot4j/i18n/messages.properties">
+			<menubar id="newmenu">
+				<menuitem id="mi-stpivot4-new" label="${plugin.menu.new}"
+					command="mantleXulHandler.openUrl('${plugin.title}','${plugin.title}','plugin/stpivot4/faces/catalog.xhtml')" />
+				<menuitem id="mi-stpivot4j-migrate" label="${plugin.menu.migrate}"
+					command="mantleXulHandler.openUrl('${plugin.title}','${plugin.title}','plugin/stpivot4/faces/migrate.xhtml')" />
+			</menubar>
+		</overlay>
+	</overlays>
+
+	<content-types>
+		<content-type type="stpivot4" mime-type="text/html">
+			<title>STPivot4 Analytics</title>
+			<description>STPivot4 analytics report</description>
+			<icon-url>api/repos/stpivot4/webapp/resources/pivot4j/images/logo16.png</icon-url>
+			<operations>
+				<operation>
+					<id>RUN</id>
+				</operation>
+				<operation>
+					<id>EDIT</id>
+					<perspective>editor</perspective>
+				</operation>
+			</operations>
+		</content-type>
+	</content-types>
+
+	<content-generator id="stpivot4" type="stpivot4" title="STPivot4 Analytics Content Generator" 
+		class="com.stratebi.stpivot4.pentaho.content.ReportContentGenerator"/>
+
+	<bean id="stpivot4.generator" class="com.stratebi.stpivot4.pentaho.content.ReportContentGenerator" />
+	<bean id="stpivot4.editor" class="com.stratebi.stpivot4.pentaho.content.ReportContentEditor" />
+</plugin>

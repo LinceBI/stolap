@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<cde-components>
+		<path>system/stpivot4/webapp/cde</path>
+		<path>stpivot4/webapp/cde</path>
+	</cde-components>
+    <new-toolbar-button>5,New STPivot4 View,STPivot4 View,plugin/stpivot4/faces/catalog.xhtml</new-toolbar-button>
+</settings>

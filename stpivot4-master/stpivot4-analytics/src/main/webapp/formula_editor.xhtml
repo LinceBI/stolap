@@ -1,0 +1,165 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+		
+	
+
+<script>
+function feditor_seleccion(uniqueName) {
+	var $textarea = $('#formula-form\\:formulaInput');
+	var contenido = $textarea.val();
+	var cursor = $textarea.caret();	
+
+	var nuevoContenido = contenido.substring(0,cursor) + " " + uniqueName + " " + contenido.substring(cursor,contenido.length);
+	$('#formula-form\\:formulaInput').val(nuevoContenido);
+}
+
+function feditor_addFormula2(textarea, formula) {
+	if (formula) {
+		if (formula.length>0) {
+			if (formula.indexOf("(")!=-1) {
+				insertBeforeAndAfterRange(textarea, formula.substr( 0, formula.indexOf("(")+1 ), ')')
+			} else {
+				formula = (formula.indexOf("||") != -1) ? "||" : formula; 
+				textarea.range(formula);
+			}
+		}
+	} 
+}
+
+</script>               
+
+	<h:form id="formula-form" styleClass="novalidationcolor">
+		<p:inputText id="feditorEditingUniqueName" type="hidden" value="#{formulaEdHandler.editingUniqueName}"/>
+
+		<p:dialog id="formulaDialog" header="#{msg['stpivot4.title.formulaEd']}"
+			widgetVar="formulaDialog" modal="true" width="1200" height="500"
+			closable="true" resizable="true" dynamic="true"
+			styleClass="calculatorDialog alternateHeader" showEffect="fade" hideEffect="fade">
+			
+			<p:ajax event="close" listener="#{formulaEdHandler.handleClose}" update=":formula-form"/>
+			
+			<p:layout styleClass="formulaForm-layout">
+			
+				<p:layoutUnit position="north" styleClass="row" >
+				    <p:selectOneMenu value="#{formulaEdHandler.selectedDimension}" required="true" styleClass="col col-2"  >
+				    	<p:ajax event="change" update="formulaButtonFormato"  />
+						<f:selectItems value="#{formulaEdHandler.allDimensions}" var="dimension" itemLabel="#{dimension.name}" itemValue="#{dimension.name}" />
+				    </p:selectOneMenu>
+					    
+					<p:inputText value="#{formulaEdHandler.name}" required="true" requiredMessage="#{msg['stpivot4.formulaeditor.formulaName.required']}" styleClass="col col-8"/>
+					
+					<p:commandButton id="formulaButtonFormato" disabled="#{formulaEdHandler.selectedDimension!='[Measures]'}" value="#{msg['stpivot4.label.format']}" onclick="PF('formulaMeasureFormatDialog').show(); return false;" styleClass="col col-1 bgcolor-gray" />
+					
+				</p:layoutUnit>
+															
+				<p:layoutUnit position="center" styleClass="row">
+				
+					<p:inputTextarea id="formulaInput" requiredMessage="#{msg['stpivot4.formulaeditor.formulaInput.required']}" value="#{formulaEdHandler.expression}" required="true" widgetVar="feditor_wvFormula" 
+						styleClass="col col-12" style="height: 100%;" />								
+
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="east" size="225" minSize="225" resizable="true" styleClass="no-padding row">
+										
+					<p:commandButton icon="ui-icon-carat-1-w scale2x" styleClass="bgcolor-gray no-margin col" style="width: 15%; height: 100%;"
+						onclick="feditor_addFormula2(PF('feditor_wvFormula').getJQ(), $(PF('fselector_wvFormula').input[0]).val()); return false;" />
+															
+					<p:selectOneListbox widgetVar="fselector_wvFormula"						
+						styleClass="no-padding alternateColors">
+						<f:selectItems value="#{formulaEdHandler.formulasTexto}" var="formula" itemLabel="#{formula}" itemValue="#{formula}" />					
+					</p:selectOneListbox>
+					
+				</p:layoutUnit>
+				
+			</p:layout>
+							
+												
+			<f:facet name="footer">
+				
+				<div class="row">
+					<p:messages showDetail="true" closable="true" />
+				
+					<p:commandLink onclick="PF('cubeSelectionDialog').show(); return false;" styleClass="col col-6 tleft">
+        				<span class="ui-icon-stpivot4 icon-cubelist"></span> <h:outputText value=" #{msg['stpivot4.label.selectFromCube']}" />
+    				</p:commandLink>
+				
+					<h:panelGroup id="button-bar" layout="block" styleClass="col col-6 ui-dialog-buttonpane">
+										
+						<p:commandButton value="#{msg['button.ok']}" icon="ui-icon-check" styleClass="bgcolor-green"
+							actionListener="#{formulaEdHandler.addName}"
+							update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) {onViewChanged(); PF('formulaDialog').hide(); }" />
+							
+							
+						<p:commandButton value="#{msg['button.apply']}" icon="ui-icon-check" styleClass="bgcolor-blue" 
+							actionListener="#{formulaEdHandler.addName}"
+    					 	update="feditorEditingUniqueName, :cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) {onViewChanged()}" />
+							
+							
+						<p:commandButton value="#{msg['button.close']}" styleClass="bgcolor-red"
+							icon="ui-icon-close"
+							onclick="PF('formulaDialog').hide();" />
+							
+					</h:panelGroup>
+				</div>
+			</f:facet>
+
+		</p:dialog>
+
+		<p:dialog id="cubeSelectionDialog" header="#{msg['stpivot4.title.cubeSelection']}" widgetVar="cubeSelectionDialog" modal="true" closeOnEscape="true" width="600" height="300"
+				closable="true" resizable="true" dynamic="true" showEffect="fade" hideEffect="fade" styleClass="cubeSelectionDialog">
+							
+																
+				<div class="buscadorOverlay">
+				
+					<p:outputLabel value="#{msg['stpivot4.label.search']}" for="ac" styleClass="buscadorOverlayLabel"/>
+					
+	                <p:autoComplete id="ac" minQueryLength="3" maxResults="10" 
+	                				completeMethod="#{formulaEdHandler.cubeMemberCompleteText}" var="member" 
+	                				styleClass="buscadorOverlayAc" >
+				    	<p:column>
+					    	<h:panelGroup layout="block" onclick="feditor_seleccion( '#{member.uniqueName}' );">
+					        	<p:outputLabel value="#{member.uniqueName}"/>
+					        </h:panelGroup>
+				        </p:column>                    
+	                    
+	                </p:autoComplete>
+	                                                
+				</div>
+				               
+	            <p:tree value="#{navigatorHandler.cubeMemberNode}" var="node" dynamic="true" cache="true" animate="true"
+	                    styleClass="navigator cube-navigator">
+	                  
+	                    <p:treeNode type="dimension" icon="ui-icon-dim">
+	                        <p:outputLabel  value="#{node.name}" styleClass="node-dimension" onclick="PF('feditor_wvFormula').getJQ().range('#{node.id}'); return false;"/>
+	                    </p:treeNode>
+	                    <p:treeNode type="hierarchy" icon="ui-icon-hier">
+	                        <p:outputLabel  value="#{node.name}" styleClass="node-hierarchy" onclick="PF('feditor_wvFormula').getJQ().range('#{node.id}'); return false;"/>
+	                    </p:treeNode>
+	                    <p:treeNode type="level" icon="ui-icon-levels ui-icon-level#{node.depth}">
+	                        <p:outputLabel  value="#{node.name}" styleClass="node-level" onclick="PF('feditor_wvFormula').getJQ().range('#{node.id}'); return false;"/>                            
+	                    </p:treeNode>
+	                    <p:treeNode type="measure">
+							<p:outputLabel value="#{node.name}" styleClass="node-member" onclick="PF('feditor_wvFormula').getJQ().range('#{node.id}'); return false;"/>	                        
+	                    </p:treeNode>
+	                    <p:treeNode type="member">
+	                        <p:outputLabel value="#{node.name}" styleClass="node-member" onclick="PF('feditor_wvFormula').getJQ().range('#{node.id}'); return false;"/>                            	                                                   
+	                    </p:treeNode>
+	
+	            </p:tree>
+						            
+		</p:dialog>	
+
+	    <ui:include src="/measureRenderFormat.xhtml">
+			<ui:param name="parameterRenderFormatHandler" value="#{formulaEdHandler.renderFormatHandler}" />
+			<ui:param name="parameterDialogWidgetVar" value="formulaMeasureFormatDialog" />
+		</ui:include>
+
+	</h:form>
+	
+</ui:composition>

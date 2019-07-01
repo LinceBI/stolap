@@ -1,0 +1,247 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="chart-form">
+		<p:dialog id="chart-config" header="#{msg['title.chart']}"
+			widgetVar="chartConfig" modal="true" width="500" height="305"
+			closable="true" resizable="false" dynamic="true"
+			styleClass="chart-config" showEffect="fade" hideEffect="fade">
+			<p:tabView id="chart-panel">
+				<p:tab title="#{msg['header.chart.axisSettings']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+					
+						<p:outputLabel value="#{msg['stpivot4.label.chart.orientation']}"
+							title="#{msg['stpivot4.label.chart.orientation.description']}"
+							for="cccchart-chartTitle" />
+						<p:selectOneRadio id="chart-orientation" value="#{cccChartHandler.orientation}">
+							<f:selectItem itemLabel="#{msg['stpivot4.label.vertical']}" itemValue="vertical" />
+							<f:selectItem itemLabel="#{msg['stpivot4.label.horizontal']}" itemValue="horizontal" />
+						</p:selectOneRadio>
+					
+						<p:outputLabel value="#{msg['stpivot4.label.chart.stacked']}"
+							title="#{msg['stpivot4.label.chart.stacked.description']}"
+							for="cccchart-chartTitle" />
+						<p:selectBooleanCheckbox id="cccchart-stacked" value="#{cccChartHandler.stacked}" />
+					
+						<p:outputLabel value="#{msg['label.chart.axis.plot']}"
+							title="#{msg['label.chart.axis.plot.description']}"
+							for="axis-plot" />
+						<p:selectOneRadio id="axis-plot" value="#{cccChartHandler.plotAxis}"
+							converter="axisConverter">
+							<f:selectItem itemLabel="#{msg['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msg['label.columns']}"
+								itemValue="COLUMNS" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msg['label.chart.axis.chart']}"
+							title="#{msg['label.chart.axis.chart.description']}"
+							for="axis-chart" />
+						<p:selectOneRadio id="axis-chart"
+							value="#{cccChartHandler.chartAxis}" converter="axisConverter">
+							<f:selectItem itemLabel="#{msg['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msg['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msg['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msg['label.chart.axis.series']}"
+							title="#{msg['label.chart.axis.series.description']}"
+							for="axis-series" />
+						<p:selectOneRadio id="axis-series"
+							value="#{cccChartHandler.seriesAxis}" converter="axisConverter">
+							<f:selectItem itemLabel="#{msg['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msg['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msg['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="#{msg['label.chart.axis.page']}"
+							title="#{msg['label.chart.axis.page.description']}"
+							for="axis-page" />
+						<p:selectOneRadio id="axis-page" value="#{cccChartHandler.pageAxis}"
+							converter="axisConverter">
+							<f:selectItem itemLabel="#{msg['label.rows']}" itemValue="ROWS" />
+							<f:selectItem itemLabel="#{msg['label.columns']}"
+								itemValue="COLUMNS" />
+							<f:selectItem itemLabel="(#{msg['label.none']})"
+								noSelectionOption="true" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+
+					<p:messages id="axis-msg" for="axis-plot" showDetail="true"
+						closable="true" />
+				</p:tab>
+
+				<p:tab title="#{msg['header.chart.appearance']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+					
+						<p:outputLabel value="#{msg['stpivot4.label.chart.title']}"
+							title="#{msg['stpivot4.label.chart.title.description']}"
+							for="cccchart-chartTitle" />
+						<h:panelGroup>
+							<p:inputText id="cccchart-chartTitle" value="#{cccChartHandler.title}" ></p:inputText>
+							
+        					<p:colorPicker value="#{cccChartHandler.titleColor}" />  							
+						</h:panelGroup>
+						
+						
+						<h:outputText value="" />
+						<h:panelGrid columns="4" columnClasses="field-name,field-input">
+						
+							<p:outputLabel value="#{msg['label.chart.legend.position']}" for="title-position" />
+							<p:selectOneMenu id="title-position"  value="#{cccChartHandler.titlePosition}" style="min-width: 80px">
+								<f:selectItem noSelectionOption="true" itemLabel="#{msg['stpivot4.label.chart.legend.position.none']}"
+									itemValue="" />
+								<f:selectItem itemLabel="#{msg['label.chart.legend.position.w']}"
+									itemValue="w" />
+								<f:selectItem itemLabel="#{msg['label.chart.legend.position.e']}"
+									itemValue="e" />
+								<f:selectItem itemLabel="#{msg['label.chart.legend.position.n']}"
+									itemValue="n" />
+								<f:selectItem itemLabel="#{msg['label.chart.legend.position.s']}"
+									itemValue="s" />
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="#{msg['properties.fontSize']}" for="title-size" />
+							<p:spinner id="title-size" value="#{cccChartHandler.titleFontSize}" min="8" max="50" size="2" />
+						</h:panelGrid>
+					
+						<p:outputLabel value="#{msg['label.chart.width']}" for="width" />
+						<h:panelGroup>
+							<p:spinner id="width" value="#{cccChartHandler.width}" min="0"
+								size="5" />
+							<h:outputText value="px" styleClass="unit" />
+							<h:outputText value="#{msg['label.chart.width.instruction']}"
+								styleClass="info" style="margin-left: 0.5em;" />
+						</h:panelGroup>
+
+						<p:outputLabel value="#{msg['label.chart.height']}" for="height" />
+						<h:panelGroup>
+							<p:spinner id="height" value="#{cccChartHandler.height}" min="0"
+								size="5" />
+							<h:outputText value="px" styleClass="unit" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="#{msg['header.chart.label']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+					
+						<p:outputLabel value="#{msg['properties.fontSize']}" for="cccchart-axisLabelFontSize" />
+						<p:spinner id="cccchart-axisLabelFontSize" value="#{cccChartHandler.axisLabelFontSize}" min="6" max="50" size="2" />
+					
+						<p:outputLabel value="#{msg['label.chart.label.angle.x']}" for="xaxis-angle" />
+						<h:panelGroup>
+							<p:spinner id="xaxis-angle" value="#{cccChartHandler.xAxisAngle}" min="-360" max="360"
+								size="5" />
+							<h:outputText value="#{msg['unit.degree']}" styleClass="unit" />
+						</h:panelGroup>
+
+						<p:outputLabel value="#{msg['stpivot4.label.chart.legend.showGrid']}" for="cccchart-yaxisGrid" />
+						<p:selectBooleanCheckbox id="cccchart-xaxisGrid" value="#{cccChartHandler.axisXGrid}" />
+						
+						<p:outputLabel value="#{msg['stpivot4.label.chart.title']}"
+							title="#{msg['stpivot4.label.chart.title.description']}"
+							for="cccchart-xaxisTitle" />
+						<h:panelGroup>
+							<p:inputText id="cccchart-xaxisTitle" value="#{cccChartHandler.axisXTitle}" ></p:inputText>
+							
+							<p:outputLabel value="  #{msg['stpivot4.label.chart.margin']} " for="cccchart-axisXMargins" />
+							<p:spinner id="cccchart-axisXMargins" value="#{cccChartHandler.axisXMargins}" min="0" max="500" size="2" />
+						</h:panelGroup>
+						
+
+						<p:outputLabel value="#{msg['label.chart.label.angle.y']}" for="yaxis-angle" />
+						<h:panelGroup>
+							<p:spinner id="yaxis-angle" value="#{cccChartHandler.yAxisAngle}" min="-360" max="360"
+								size="5" />
+							<h:outputText value="#{msg['unit.degree']}" styleClass="unit" />
+						</h:panelGroup>
+
+						<p:outputLabel value="#{msg['stpivot4.label.chart.legend.showGrid']}" for="cccchart-yaxisGrid" styleClass="field-input"/>
+						<p:selectBooleanCheckbox id="cccchart-yaxisGrid" value="#{cccChartHandler.axisYGrid}" styleClass="field-name" />
+						
+						<p:outputLabel value="#{msg['stpivot4.label.chart.title']}"
+							title="#{msg['stpivot4.label.chart.title.description']}"
+							for="cccchart-yaxisTitle" />
+						<h:panelGroup>
+							<p:inputText id="cccchart-yaxisTitle" value="#{cccChartHandler.axisYTitle}" ></p:inputText>
+							
+							<p:outputLabel value="  #{msg['stpivot4.label.chart.margin']} " for="cccchart-axisYMargins" />
+							<p:spinner id="cccchart-axisYMargins" value="#{cccChartHandler.axisYMargins}" min="0" max="500" size="2" />
+						</h:panelGroup>
+
+						
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="#{msg['header.chart.legend']}">
+					<h:panelGrid columns="2" columnClasses="field-name,field-input">
+						<p:outputLabel value="#{msg['label.chart.legend.position']}"
+							for="legend-position" />
+						<p:selectOneRadio id="legend-position"
+							value="#{cccChartHandler.legendPosition}">
+							<f:selectItem noSelectionOption="true" itemLabel="#{msg['stpivot4.label.chart.legend.position.none']}"
+								itemValue="" />
+							<f:selectItem itemLabel="#{msg['label.chart.legend.position.w']}"
+								itemValue="w" />
+							<f:selectItem itemLabel="#{msg['label.chart.legend.position.e']}"
+								itemValue="e" />
+							<f:selectItem itemLabel="#{msg['label.chart.legend.position.n']}"
+								itemValue="n" />
+							<f:selectItem itemLabel="#{msg['label.chart.legend.position.s']}"
+								itemValue="s" />
+						</p:selectOneRadio>
+						
+						<p:outputLabel value="#{msg['stpivot4.label.chart.showValues']}" for="cccchart-showValues" />
+						<h:panelGroup>
+							<p:selectBooleanCheckbox id="cccchart-showValues" value="#{cccChartHandler.showValues}" />
+							<p:outputLabel value="  #{msg['properties.fontSize']}  " for="cccchart-valuesSize" />
+							<p:spinner id="cccchart-valuesSize" value="#{cccChartHandler.valuesFontSize}" min="1" max="50" size="2" />
+						</h:panelGroup>
+						
+						<p:outputLabel value="#{msg['stpivot4.label.chart.dotsVisible']}" for="cccchart-dotsVisible" />
+						<p:selectBooleanCheckbox id="cccchart-dotsVisible" value="#{cccChartHandler.dotsVisible}" />
+						
+						<p:outputLabel value="#{msg['stpivot4.label.chart.dotshape']}" for="cccchart-dotShape" />
+						<p:selectOneMenu id="cccchart-dotShape"  value="#{cccChartHandler.dotShape}" style="min-width: 100px">
+							<f:selectItem itemLabel="#{msg['stpivot4.label.chart.dotshape.circle']}"
+								itemValue="circle" />
+							<f:selectItem itemLabel="#{msg['stpivot4.label.chart.dotshape.square']}"
+								itemValue="square" />
+							<f:selectItem itemLabel="#{msg['stpivot4.label.chart.dotshape.triangle']}"
+								itemValue="triangle" />
+							<f:selectItem itemLabel="#{msg['stpivot4.label.chart.dotshape.cross']}"
+								itemValue="cross" />
+							<f:selectItem itemLabel="#{msg['stpivot4.label.chart.dotshape.diamond']}"
+								itemValue="diamond" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="#{msg['stpivot4.label.chart.dothapeSize']}" for="cccchart-dotShapeSize" />
+						<p:spinner id="cccchart-dotShapeSize" value="#{cccChartHandler.dotShapeSize}" min="8" max="50" size="2" />
+						
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+
+			<f:facet name="footer">
+				<h:panelGroup id="button-bar" styleClass="ui-dialog-buttonpane"
+					layout="block">
+					<p:commandButton value="#{msg['button.ok']}" icon="ui-icon-check" styleClass="bgcolor-green"
+						action="#{cccChartHandler.apply}" update=":grid-form,chart-panel"
+						onsuccess="onViewChanged(); PF('chartConfig').hide();" />
+					<p:commandButton value="#{msg['button.apply']}" 
+						icon="ui-icon-check" styleClass="bgcolor-blue" action="#{cccChartHandler.apply}"
+						update=":grid-form,chart-panel" oncomplete="onViewChanged()" />
+					<p:commandButton value="#{msg['button.close']}"
+						icon="ui-icon-close" styleClass="bgcolor-red" onclick="PF('chartConfig').hide(); return false;" />
+				</h:panelGroup>
+			</f:facet>
+		</p:dialog>
+	</h:form>
+</ui:composition>

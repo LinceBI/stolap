@@ -1,0 +1,312 @@
+body{
+  background: url('#{resource['stpivot4:images/bg.jpg']}')!important;
+}
+.logo_stratebi{
+  position: absolute;
+  bottom:50px;
+  right:50px;
+  height:100px;
+}
+.logo_stpivot{
+height:300px; 
+    -webkit-transition: all 1s ease ; /* Safari */
+    transition: all 1s ease;
+
+}
+.logo_stpivot_mostrar{
+height:200px;
+    -webkit-transition: all 1s ease ; /* Safari */
+    transition: all 1s ease;
+}
+
+.ui-dialog{
+  display:none !important;
+}
+.centrar{
+  text-align: center;
+}
+
+  #slider {
+    height: auto;
+    margin-left:25%;
+    margin-top:15px;
+    width:50%;
+    opacity:0;
+    -webkit-transition: all 1s ease ; /* Safari */
+  }
+  .ui-dialog{
+    display:none !important;
+  }
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    border: solid 0px;
+    border-bottom: 1px #ccc solid !important;
+    background: transparent;
+    color: #666 !important;
+    margin-bottom: 0px !important;
+    width: 46%;
+    padding: 7px;
+    border-radius: 0px;
+    margin-left: 13px !important;
+    padding-left: 20px;  
+  }
+.ui-state-default.active {
+    background-color: #E1F3D3 !important;
+}
+  .ui-state-default:focus, .ui-widget-content .ui-state-default:focus, .ui-widget-header .ui-state-default:focus{
+      outline: -webkit-focus-ring-color auto 0px;  
+  }
+
+  .ui-state-default.ui-state-hover, .ui-widget-content .ui-state-default.ui-state-hover, .ui-widget-header .ui-state-default.ui-state-hover{
+      background-color: #e4e4e4;
+  }
+
+  .ui-button{
+    width: 40%;
+    margin-left: 5%;
+    text-align:center;
+    -webkit-transition: all 1s ease; /* Safari */
+    transition: all 1s ease;
+  }
+  .ui-state-default .ui-icon{
+    margin-left: -6px !important;
+    margin-top: -9px !important;
+  }
+  .ui-state-default .ui-icon:focus{
+    outline: -webkit-focus-ring-color auto 0px;  
+  }
+
+  .ui-widget-content{
+    background:  transparent;
+    border: 0px #7C9C0E solid;*/
+  }
+  .active{
+    background: white !important;
+    -webkit-transition: all 1s ease ; /* Safari */
+    transition: all 1s ease;
+    width: 46% !important;
+    margin-left: 2% !important;
+  }
+  .mostrar{
+    -webkit-transition: all 1s ease ; /* Safari */
+    transition: all 1s ease;
+    opacity: 1 !important;
+    display:block;
+  }
+  .desplegado{
+    width: 100%;
+    float: right;
+    margin-right: 2%;
+    margin-left: 2%;
+    opacity: 0;
+    position: absolute;
+    left: 48%;
+    top: 46px; 
+    display: none;
+  }
+  .titulo_slider{
+    width: 46%;
+    border-bottom: 1px #7C9C0E solid;
+    font-weight: 100;
+    margin-bottom: 20px;
+    float: left;
+    margin-right: 2%;
+    margin-left: 2%;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    text-align: left;
+    font-size: 17px;
+    font-family: OpenSansRegular, sans-serif;
+    color: #7C9C0E;
+  }
+  ul{
+    list-style:none;
+    margin: 0px;
+    padding: 0px;
+  }
+  #desplegado ul{
+    display: none;
+  }
+#catalog-chooser .ui-button-text-icon-left .ui-button-text{
+    padding: 0em;
+    text-align: left;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+/*body{
+  background: url('#{resource['stpivot4:images/bg.jpg']}')!important;
+}
+ #slider {
+    height: auto;
+    margin-left:35%;
+    margin-top:50px;
+}
+.logo_stratebi{
+  float:right;
+  position: absolute;
+  bottom:50px;
+  right:50px;
+  height:100px;
+}
+.logo_stpivot{
+  height:200px;
+  margin-left: 35%;
+}
+.icono{
+  height:50px;
+  position: relative;
+  top:15px;
+  left:10px;
+}
+.enlace{
+  font-weight: bold;
+    text-decoration: none;
+  font-size: 120%;
+  color:white;
+
+ }
+#slider ul:before {
+background: rgba(53,175,69,1);
+background: -moz-linear-gradient(left, rgba(53,175,69,1) 0%, rgba(99,217,114,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(53,175,69,1)), color-stop(100%, rgba(99,217,114,1)));
+background: -webkit-linear-gradient(left, rgba(53,175,69,1) 0%, rgba(99,217,114,1) 100%);
+background: -o-linear-gradient(left, rgba(53,175,69,1) 0%, rgba(99,217,114,1) 100%);
+background: -ms-linear-gradient(left, rgba(53,175,69,1) 0%, rgba(99,217,114,1) 100%);
+background: linear-gradient(to right, rgba(53,175,69,1) 0%, rgba(99,217,114,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35af45', endColorstr='#63d972', GradientType=1 );
+    border-radius: 30px 0 0 30px;
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.65);
+    content: "";
+    height: 100%;
+    margin-top: -40px;
+    position: absolute;
+    width: 182px;
+    z-index: 100;
+    border:none!important;
+}
+#slider ul {
+    list-style: none outside none;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 40px 0;
+    position: relative;
+    width: 182px;
+}
+#slider ul li {
+    height: 40px;
+    width: 182px;
+}
+.desplegado{
+  height:auto !important;
+}
+#slider ul li a.menudesplieg {
+    border-bottom: 1px solid #333;
+    color: white;
+    display: block;
+    font-family: 'Trebuchet MS';
+    font-size: 1.6em;
+    font-style: italic;
+    letter-spacing: -1px;
+    padding-left: 22px;
+    padding-bottom:5px;
+    position: absolute;
+    text-decoration: none;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    width: 160px;
+    z-index: 110;
+}
+#slider ul li div {
+    background: none repeat scroll 0 0 rgba(200, 200, 200, 0.6);
+   border-radius: 0 15px 15px 0;
+    color: white;
+    height: 266px;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 15px 15px;
+    position: absolute;
+    top: 0;
+  transition: 1s left,1s width,1s opacity;
+    -webkit-transition: 1s left,1s width,1s opacity;
+    -moz-transition: 1s left,1s width,1s opacity;
+    -o-transition: 1s left,1s width,1s opacity;
+    width: 152px;
+    z-index: 50;
+}
+#slider ul li:hover div {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+    left: 182px;
+    opacity: 1;
+    width: 276px;
+}
+
+#slider ul li div h5 {
+    border-bottom: 1px solid #888;
+    color: #63D973;
+    font-family: trebuchet ms;
+    font-size: 1.5em;
+    margin: 2px 0 2px;
+    text-align: center;
+}
+#slider ul li div p {
+    font-family: trebuchet ms;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: normal;
+    overflow: hidden;
+    padding-top: 15px;
+    width: 276px;
+}
+#slider ul li div p.desplieg {
+  float: right;
+}
+#slider ul li div p.desplieg a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 3px;
+    color: #009999;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    height: 18px;
+    margin: 10px 0;
+    padding: 4px;
+    text-decoration: none;
+}
+
+#slider .desplegado ul:before{
+  background: transparent;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0);
+
+
+}
+
+.desplegado ul li{
+  height:10px;
+}
+*/
+
+#catalog-chooser{
+    position: relative;
+}
+
+.ui-icon.ui-icon-olap{
+    background-image: url('#{resource['stpivot4:images/cubo_30px.png']}') !important;
+    background-size: 100%;
+    float: left;
+    width: 13px;
+    height: 20px;
+    margin-top: -7px !important;
+    margin-right: 3px;
+    opacity: 0.7;
+}
+.ui-icon.ui-icon-jerarq{
+    background-image: url('#{resource['stpivot4:images/jerarq.png']}') !important;
+    background-size: 100%;
+    float: left;
+    width: 13px;
+    height: 20px;
+    margin-top: -7px !important;
+    margin-right: 3px;
+}

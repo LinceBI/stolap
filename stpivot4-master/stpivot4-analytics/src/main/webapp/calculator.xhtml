@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+		<style>
+			#calculator-form\:formula  {
+				width: 95%;
+			}
+			#calculator-form\:measuresList  {
+				width: 100%;
+				min-height: 150px;
+			}
+			
+			#calculator-form\:calculatorDialog .row-buttons  {
+				padding: 10px;
+			}
+			
+			#calculator-form\:calculatorDialog .row-buttons button {
+				width: calc(100% /5 - 10px);
+				height: 40px;
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+
+			#calculator-form\:calculatorDialog .row-buttons button.clear_button {
+				width: calc(100% /2.5 - 10px);
+			}
+			
+			.unit-title .ui-widget-content {
+				background: #EDEDED;
+			}
+			.unit-title label {
+				background: #868686;
+				line-height: 24px;
+				text-align: right;
+				font-weight: bold;
+				text-color: #4C4C4C;
+			}
+			
+			.unit-title label {
+				width: 20%;
+			}
+			.unit-title input {
+				width: 70%;
+				margin-left: 0;
+			}
+			
+		</style>
+	
+	
+	<h:form id="calculator-form" styleClass="novalidationcolor">
+		<p:inputText id="calcfEditingUniqueName" type="hidden" value="#{calculatorHandler.editingUniqueName}"/>
+		<p:dialog id="calculatorDialog" header="#{msg['stpivot4.title.calculator']}"
+			widgetVar="calculatorDialog" modal="true" width="730" height="305"
+			closable="true" resizable="true" dynamic="true"
+			styleClass="calculatorDialog" showEffect="fade" hideEffect="fade">
+			
+			<p:ajax event="close" listener="#{calculatorHandler.handleClose}" update=":calculator-form"/>
+			
+			<p:layout id="layout" style="height: 100%;">
+				<p:layoutUnit position="north" styleClass="row unit-title">
+					<h:panelGroup layout="block">
+						<p:outputLabel styleClass="col" for="fromInput" value="#{msg['stpivot4.measures_dot']}" />			
+						<p:inputText styleClass="col" id="fromInput" value="#{calculatorHandler.name}" widgetVar="calcf_wvFormulaName" required="true"  requiredMessage="#{msg['stpivot4.calculator.name.required']}" />
+					</h:panelGroup> 
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="center" >
+
+					<div>
+						<p:inputTextarea id="formula" required="true" requiredMessage="#{msg['stpivot4.calculator.expression.required']}" value="#{calculatorHandler.set}" rows="5" cols="70" widgetVar="calcf_wvFormula" />
+					</div>
+
+					<h:panelGroup layout="block" styleClass="row">
+					
+						<div class="col col-4">
+							<p:selectOneListbox id="measuresList" widgetVar="calcf_wvMeasuresList" value="#{calculatorHandler.selectedMeasure}" ondblclick="PF('calcf_wvFormula').getJQ().range($(PF('calcf_wvMeasuresList').input[0]).val()); return false">
+					          <f:selectItems  value="#{calculatorHandler.measures}" itemLabel="#{calculatorHandler.measures}" />
+					        </p:selectOneListbox>
+				        </div>
+				        
+						<div class="col col-8">
+						
+							<div class="row-buttons">
+					
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="." onclick="PF('calcf_wvFormula').getJQ().range('.'); return false;"  >
+					            <f:attribute name="button"  value="." />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="+" onclick="PF('calcf_wvFormula').getJQ().range('+'); return false;" >
+					            <f:attribute name="button"  value="+" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="-" onclick="PF('calcf_wvFormula').getJQ().range('-'); return false;" >
+					            <f:attribute name="button"  value="-" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="*" onclick="PF('calcf_wvFormula').getJQ().range('*'); return false;" >
+					            <f:attribute name="button"  value="*" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="/" onclick="PF('calcf_wvFormula').getJQ().range('/'); return false;" >
+					            <f:attribute name="button"  value="/" />
+					          </p:commandButton>
+					          
+					        </div>
+
+							<div class="row-buttons">
+
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="1/()" onclick="insertBeforeAndAfterRange(PF('calcf_wvFormula').getJQ(), '1/(', ')'); return false;" >
+					            <f:attribute name="button"  value="1/(" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="()*100" onclick="insertBeforeAndAfterRange(PF('calcf_wvFormula').getJQ(), '(', ')*100'); return false;" >
+					            <f:attribute name="button"  value=")*100" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-ligthgray" value="Abs()" onclick="insertBeforeAndAfterRange(PF('calcf_wvFormula').getJQ(), 'Abs(', ')'); return false;" >
+					            <f:attribute name="button"  value="Abs(" />
+					          </p:commandButton>
+					          <p:commandButton styleClass="bgcolor-gray clear_button" value="Clear" onclick="PF('calcf_wvFormula').getJQ().val(''); return false;" >
+					            <f:attribute name="button"  value="clear" />
+					          </p:commandButton>
+
+					        </div>
+
+				        </div>
+				        		            
+					</h:panelGroup>
+
+				</p:layoutUnit>
+			</p:layout>
+
+
+			<f:facet name="footer">
+				<h:panelGroup id="button-bar" styleClass="ui-dialog-buttonpane"
+					layout="block">
+					<p:messages showDetail="true" closable="true" />
+					
+					<p:commandButton value="#{msg['button.ok']}" icon="ui-icon-check" styleClass="bgcolor-green"
+						actionListener="#{calculatorHandler.addName}"
+						update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+						oncomplete="if (args &amp;&amp; !args.validationFailed) {onViewChanged(); PF('calculatorDialog').hide(); }" />
+						
+					<p:commandButton value="#{msg['button.apply']}"
+					
+						icon="ui-icon-check" styleClass="bgcolor-blue" 
+						actionListener="#{calculatorHandler.addName}"
+						update="calcfEditingUniqueName, :cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+						oncomplete="if (args &amp;&amp; !args.validationFailed) {onViewChanged()}" />
+						
+					<p:commandButton value="#{msg['button.close']}" styleClass="bgcolor-red"
+						icon="ui-icon-close"
+						onclick="PF('calculatorDialog').hide();" />
+						
+				</h:panelGroup>
+			</f:facet>
+
+		</p:dialog>
+	</h:form>
+		
+</ui:composition>
