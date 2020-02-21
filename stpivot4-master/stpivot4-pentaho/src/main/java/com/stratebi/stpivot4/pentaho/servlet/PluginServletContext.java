@@ -108,7 +108,7 @@ public class PluginServletContext implements ServletContext {
 	 * @return
 	 */
 	public String getContextPath() {
-		return wrappedContext.getContextPath();
+		return wrappedContext.getRealPath("/");
 	}
 
 	/**

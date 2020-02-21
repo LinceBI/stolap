@@ -50,7 +50,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		<version.plugin.jar>2.4</version.plugin.jar>
 		<version.plugin.javadoc>2.9.1</version.plugin.javadoc>
 		<version.plugin.javancss>2.0</version.plugin.javancss>
-		<version.plugin.jetspeed>2.2.2</version.plugin.jetspeed>
+		<version.plugin.jetspeed>2.3.2</version.plugin.jetspeed>
 		<version.plugin.jxr>2.4</version.plugin.jxr>
 		<version.plugin.l10n>1.0-alpha-2</version.plugin.l10n>
 		<version.plugin.site>3.3</version.plugin.site>
@@ -74,11 +74,11 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		<version.slf4j>1.7.7</version.slf4j>
 		<version.log4j>2.0.2</version.log4j>
 
-		<version.mondrian>3.6.7</version.mondrian>
+		<version.mondrian>3.14.0.0-12</version.mondrian>
 		<version.olap4j>1.2.0</version.olap4j>
-		<version.pentaho>5.2.0.1-216</version.pentaho>
+		<version.pentaho>5.4.0.1-130</version.pentaho>
 
-		<version.pivot4j>1.0-SNAPSHOT</version.pivot4j>
+		<version.pivot4j>0.9</version.pivot4j>
 
 		<version.htmlcleaner>2.6.1</version.htmlcleaner>
 		<version.xhtmlrenderer>9.0.9</version.xhtmlrenderer>
@@ -117,7 +117,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		<version.jflex>1.4.3</version.jflex>
 		<version.poi>3.10-FINAL</version.poi>
 		<version.shrinkwrap>2.0.0</version.shrinkwrap>
-		<version.tomcat6>6.0.41</version.tomcat6>
+		<version.tomcat6>6.0.53</version.tomcat6>
 		<version.xerces>2.11.0</version.xerces>
 		<version.reflow.velocity>1.0.0</version.reflow.velocity>
 		<version.velocity>1.7</version.velocity>
@@ -424,9 +424,12 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 
 	<repositories>
 		<repository>
-			<id>pentaho</id>
-			<name>Pentaho Repository</name>
-			<url>http://repo.pentaho.org/artifactory/repo/</url>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>stratebi</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
 		</repository>
 	</repositories>
 

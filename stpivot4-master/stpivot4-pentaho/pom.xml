@@ -34,11 +34,12 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.portals.jetspeed-2</groupId>
-				<artifactId>jetspeed-unpack-maven-plugin</artifactId>
+				<groupId>nl.praegus</groupId>
+    			<artifactId>jetspeed-unpack-maven-plugin</artifactId>
 				<version>${version.plugin.jetspeed}</version>
 				<executions>
 					<execution>
+						<?m2e execute onConfiguration?>
 						<phase>validate</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -207,6 +208,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${version.plugin.javadoc}</version>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
 				<executions>
 					<execution>
 						<id>javadoc-jar</id>
@@ -352,9 +356,17 @@
 
 	<repositories>
 		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>stratebi</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
+		</repository>
+		<repository>
 			<id>pentaho-third-party</id>
 			<name>Pentaho Third Party Repository</name>
-			<url>http://repo.pentaho.org/artifactory/third-party/</url>
+			<url>https://nexus.pentaho.org/repository/proxy-public-3rd-party-release/</url>
 		</repository>
 		<repository>
 			<id>prime-repo</id>
