@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.DoubleConverter;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.olap4j.Axis;
 import org.olap4j.Cell;
@@ -54,7 +55,6 @@ import org.slf4j.LoggerFactory;
 public class PivotComponentBuilder extends
 		AbstractRenderCallback<TableRenderContext> implements
 		TableRenderCallback {
-
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -393,7 +393,7 @@ public class PivotComponentBuilder extends
 
 	/**
 	 * @see org.pivot4j.ui.RenderCallback#renderCommands(org.pivot4j.ui.RenderContext,
-	 *      java.util.List)
+	 * java.util.List)
 	 */
 	@Override
 	public void renderCommands(TableRenderContext context,
@@ -455,10 +455,14 @@ public class PivotComponentBuilder extends
 				hierarchyParam.setValue(parameters.getHierarchyOrdinal());
 				button.getChildren().add(hierarchyParam);
 
-				UIParameter cellParam = new UIParameter();
-				cellParam.setName("cell");
-				cellParam.setValue(parameters.getCellOrdinal());
-				button.getChildren().add(cellParam);
+				if (parameters.getCellCoordinate() != null) {
+                    Integer[] coords = ArrayUtils.toObject(parameters.getCellCoordinate());
+
+					UIParameter cellParam = new UIParameter();
+					cellParam.setName("cell");
+					cellParam.setValue(StringUtils.join(coords, ','));
+					button.getChildren().add(cellParam);
+				}
 
 				column.getChildren().add(button);
 			}
@@ -467,7 +471,7 @@ public class PivotComponentBuilder extends
 
 	/**
 	 * @see org.pivot4j.ui.RenderCallback#renderContent(org.pivot4j.ui.RenderContext,
-	 *      java.lang.String, java.lang.Double)
+	 * java.lang.String, java.lang.Double)
 	 */
 	@Override
 	public void renderContent(TableRenderContext context, String label,
@@ -610,8 +614,8 @@ public class PivotComponentBuilder extends
 					.getLastErrors(category);
 
 			for (String property : errors.keySet()) {
-				String title = mf.format(new String[] { resources
-						.getString("properties." + property) });
+				String title = mf.format(new String[]{resources
+						.getString("properties." + property)});
 
 				EvaluationFailedException e = errors.get(property);
 

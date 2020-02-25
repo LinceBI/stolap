@@ -45,12 +45,13 @@ public class PivotComponentBuilder extends org.pivot4j.analytics.ui.PivotCompone
 	 * @see org.pivot4j.analytics.ui.PivotComponentBuilder#renderContent(org.pivot4j.ui.table.TableRenderContext, java.lang.String, java.lang.Double)
 	 */
 	@Override
-	public void renderContent(TableRenderContext context, String label, Double value) {
+	public void renderContent(TableRenderContext context, String label,
+			Double value) {
 		ExpressionContext elContext = context.getExpressionContext();
 		
 		//Check if value with custom format
 		RenderFormat renderFormat = RenderFormat.parseFormatString(label);
-		if (renderFormat!=null) {
+		if (renderFormat != null) {
 			label = renderFormat.getId();
 		}
 
@@ -118,7 +119,7 @@ public class PivotComponentBuilder extends org.pivot4j.analytics.ui.PivotCompone
 			String link = propertyUtils.getString("link",
 					context.getRenderPropertyCategory(), null);
 
-			if (renderFormat!=null) {
+			if (renderFormat != null) {
 				//Apply custom format
 				if (StringUtils.isNotBlank(renderFormat.getFgColor())) {
 					text.setStyle("color: #" + renderFormat.getFgColor());
@@ -128,7 +129,7 @@ public class PivotComponentBuilder extends org.pivot4j.analytics.ui.PivotCompone
 					text.setStyleClass("arrowsign " + renderFormat.getArrowSignClass());
 				}
 				
-				if (renderFormat!=null && StringUtils.isNotBlank(renderFormat.getLink())) {
+				if (renderFormat != null && StringUtils.isNotBlank(renderFormat.getLink())) {
 					link = renderFormat.getLink();
 				}
 			}

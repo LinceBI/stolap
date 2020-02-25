@@ -3,10 +3,7 @@ package org.pivot4j.analytics.ui;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -18,6 +15,7 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.olap4j.AllocationPolicy;
@@ -203,8 +201,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param stateManager
-	 *            the stateManager to set
+	 * @param stateManager the stateManager to set
 	 */
 	public void setStateManager(PivotStateManager stateManager) {
 		this.stateManager = stateManager;
@@ -218,8 +215,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param drillThroughHandler
-	 *            the drillThroughHandler to set
+	 * @param drillThroughHandler the drillThroughHandler to set
 	 */
 	public void setDrillThroughHandler(DrillThroughHandler drillThroughHandler) {
 		this.drillThroughHandler = drillThroughHandler;
@@ -233,8 +229,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param cubeName
-	 *            the cubeName to set
+	 * @param cubeName the cubeName to set
 	 */
 	public void setCubeName(String cubeName) {
 		this.cubeName = cubeName;
@@ -248,8 +243,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param navigator
-	 *            the navigator to set
+	 * @param navigator the navigator to set
 	 */
 	public void setNavigator(NavigatorHandler navigator) {
 		this.navigator = navigator;
@@ -263,8 +257,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param component
-	 *            the component to set
+	 * @param component the component to set
 	 */
 	public void setComponent(UIComponent component) {
 		this.component = component;
@@ -278,8 +271,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param filterComponent
-	 *            the filterComponent to set
+	 * @param filterComponent the filterComponent to set
 	 */
 	public void setFilterComponent(UIComponent filterComponent) {
 		this.filterComponent = filterComponent;
@@ -362,9 +354,11 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 				}
 			}
 		}
+
+		drillThroughHandler.reset();
 	}
 
-	protected String getDefaultMdx() {
+	private String getDefaultMdx() {
 		String mdx;
 
 		if (OlapUtils.isEmptySetSupported(model.getMetadata())) {
@@ -583,13 +577,13 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 		if (renderGrid || renderFilter) {
 			FacesContext context = FacesContext.getCurrentInstance();
 
-			//Para el custom format de las medidas 
+			// Para el custom format de las medidas 
 			PivotComponentBuilder callback = new com.stratebi.stpivot4.analytics.ui.PivotComponentBuilder(context);
 			callback.setGridPanel(component);
 			callback.setFilterPanel(filterComponent);
 
-//			renderer.setEnableDrillDown(isEditable());
-//			renderer.setEnableSort(isEditable());
+			// renderer.setEnableDrillDown(isEditable());
+			// renderer.setEnableSort(isEditable());
 
 			//Siempre se permite
 			renderer.setEnableDrillDown(true);
@@ -632,9 +626,16 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 		}
 
 		if (requestParameters.containsKey("cell")) {
-			parameters.setCellOrdinal(Integer.parseInt(requestParameters
-					.get("cell")));
-		}
+            String[] values = requestParameters.get("cell").split(",");
+
+            int[] coords = new int[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+                coords[i] = Integer.parseInt(values[i]);
+            }
+
+            parameters.setCellCoordinate(coords);
+        }
 
 		UICommand<?> command = renderer.getCommand(requestParameters
 				.get("command"));
@@ -725,8 +726,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param showParentMembers
-	 *            the showParentMembers to set
+	 * @param showParentMembers the showParentMembers to set
 	 */
 	public void setShowParentMembers(boolean showParentMembers) {
 		renderer.setShowParentMembers(showParentMembers);
@@ -740,8 +740,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param hideSpans
-	 *            the hideSpans to set
+	 * @param hideSpans the hideSpans to set
 	 */
 	public void setHideSpans(boolean hideSpans) {
 		renderer.setHideSpans(hideSpans);
@@ -755,8 +754,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param drillThrough
-	 *            the drillThrough to set
+	 * @param drillThrough the drillThrough to set
 	 */
 	public void setDrillThrough(boolean drillThrough) {
 		renderer.setEnableDrillThrough(drillThrough);
@@ -775,8 +773,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param drillDownMode
-	 *            the drillDownMode to set
+	 * @param drillDownMode the drillDownMode to set
 	 */
 	public void setDrillDownMode(String drillDownMode) {
 		renderer.setDrillDownMode(drillDownMode);
@@ -790,8 +787,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param visible
-	 *            the visible to set
+	 * @param visible the visible to set
 	 */
 	public void setVisible(boolean visible) {
 		this.renderer.setVisible(visible);
@@ -810,8 +806,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param editable
-	 *            the editable to set
+	 * @param editable the editable to set
 	 */
 	public void setEditable(boolean editable) {
 		stateManager.getState().setEditable(editable);
@@ -830,8 +825,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param swapAxes
-	 *            the swapAxes to set
+	 * @param swapAxes the swapAxes to set
 	 */
 	public void setSwapAxes(boolean swapAxes) {
 		SwapAxes transform = model.getTransform(SwapAxes.class);
@@ -857,8 +851,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param nonEmpty
-	 *            the nonEmpty to set
+	 * @param nonEmpty the nonEmpty to set
 	 */
 	public void setNonEmpty(boolean nonEmpty) {
 		NonEmpty transform = model.getTransform(NonEmpty.class);
@@ -874,8 +867,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param scenarioEnabled
-	 *            the scenarioEnabled to set
+	 * @param scenarioEnabled the scenarioEnabled to set
 	 */
 	public void setScenarioEnabled(boolean scenarioEnabled) {
 		if (scenarioEnabled) {
@@ -889,8 +881,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param drillThroughRows
-	 *            the drillThroughRows to set
+	 * @param drillThroughRows the drillThroughRows to set
 	 */
 	protected void setDrillThroughRows(Integer drillThroughRows) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -912,8 +903,7 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 	}
 
 	/**
-	 * @param renderSlicer
-	 *            the renderSlicer to set
+	 * @param renderSlicer the renderSlicer to set
 	 */
 	public void setRenderSlicer(boolean renderSlicer) {
 		renderer.setRenderSlicer(renderSlicer);
@@ -975,12 +965,15 @@ public class ViewHandlerPivot4j implements QueryListener, ModelChangeListener {
 
 		/**
 		 * @see org.pivot4j.ui.command.BasicDrillThroughCommand#execute(org.pivot4j.PivotModel,
-		 *      org.pivot4j.ui.command.UICommandParameters)
+		 * org.pivot4j.ui.command.UICommandParameters)
 		 */
 		@Override
 		public ResultSet execute(PivotModel model,
 				UICommandParameters parameters) {
-			Cell cell = model.getCellSet().getCell(parameters.getCellOrdinal());
+			int[] array = parameters.getCellCoordinate();
+            List<Integer> coords = Arrays.asList(ArrayUtils.toObject(array));
+
+            Cell cell = model.getCellSet().getCell(coords);
 
 			drillThroughHandler.update(cell);
 
