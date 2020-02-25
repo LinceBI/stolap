@@ -19,7 +19,7 @@
 	<h:outputStylesheet library="primefaces"
 		name="colorpicker/colorpicker.css" />
 	<h:outputStylesheet library="pivot4j" name="css/style.css" />
-
+	<h:outputScript library="primefaces" name="printer/printer.js" />
 	<h:outputScript library="pivot4j" name="js/pivot4j.js" />
 </h:head>
 
@@ -32,6 +32,36 @@
 </f:metadata>
 
 <h:body id="body" styleClass="embeded report">
+	<h:form id="toolbar-form">
+		<p:toolbar id="toolbar">
+			<f:facet name="left">
+				<p:menuButton value="#{msg['toolbar.export']}"
+					disabled="#{!viewHandler.valid}"
+					styleClass="export-menu">
+					<p:menuitem id="mi-export-xls"
+						value="#{msg['toolbar.export.format.xls']}"
+						action="#{pivotExportHandler.exportExcel}" icon="ui-icon-disk"
+						ajax="false">
+						<f:param name="format" value="HSSF" />
+					</p:menuitem>
+					<p:menuitem id="mi-export-xlsx"
+						value="#{msg['toolbar.export.format.xlsx']}"
+						action="#{pivotExportHandler.exportExcel}" icon="ui-icon-disk"
+						ajax="false">
+						<f:param name="format" value="SXSSF" />
+					</p:menuitem>
+					<p:menuitem id="mi-export-pdf"
+						value="#{msg['toolbar.export.format.pdf']}" icon="ui-icon-print"
+						onclick="PF('exportConfig').show();" />
+					<p:separator />
+					<p:menuitem
+						value="#{msg['toolbar.print']}" title="#{msg['toolbar.print.tooltip']}"
+						icon="ui-icon-print" onclick="$('table.pivot-grid:first').jqprint();" />
+				</p:menuButton>
+			</f:facet>
+		</p:toolbar>
+	</h:form>
+
 	<h:form id="grid-form" onkeypress="return event.keyCode != 13;">
 		<h:panelGroup id="pivot-grid" binding="#{viewHandler.component}"
 			layout="block"
@@ -61,6 +91,7 @@
 			globalOnly="true" />
 	</h:form>
 
+	<ui:include src="export.xhtml" />
 	<p:ajaxStatus styleClass="ajax-status" onstart="showWaitDialog();"
 		oncomplete="hideWaitDialog();" />
 

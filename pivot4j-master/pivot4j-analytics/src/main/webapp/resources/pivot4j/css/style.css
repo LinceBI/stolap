@@ -113,6 +113,10 @@ body.report .pe-layout-pane-header {
 	padding-right: 0;
 }
 
+.embeded #toolbar-form {
+	margin-bottom: 10px;
+}
+
 #toolbar-form .ui-icon-info {
 	background-image: url('#{resource['pivot4j:images/logo16.png']}');
 	background-position: 0 center;
@@ -717,4 +721,8 @@ body.ie-compat .ui-toolbar .ui-separator {
 
 .migration-dialog .ui-layout-container .ui-layout-pane-north {
 	border: none;
+}
+
+.wrap {
+	white-space: normal !important;
 }

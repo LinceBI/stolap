@@ -200,10 +200,12 @@ public class TableRenderer extends AbstractPivotRenderer<TableRenderContext, Tab
 	@Override
 	protected Double getValue(TableRenderContext context) {
 		Double value = null;
+		boolean nonNumericValue = false;
 
 		Aggregator aggregator = context.getAggregator();
 
 		Cell cell = context.getCell();
+		
 
 		try {
 			if (aggregator == null) {
@@ -211,17 +213,22 @@ public class TableRenderer extends AbstractPivotRenderer<TableRenderContext, Tab
 					try {
 						value = cell.getDoubleValue();
 					} catch (OlapException e) {
-						throw new PivotException(e);
+						nonNumericValue = true;
+						//#218 do nothing: cell.getDoubleValue() throws OlapException if this cell does not have a numeric value
 					}
 				}
 			} else {
 				value = aggregator.getValue(context);
 			}
 		} catch (NumberFormatException e) {
-			if (logger.isTraceEnabled()) {
-				logger.trace("Non-numeric cell value : {}", cell.getValue());
-			}
+			nonNumericValue = true;
+			//#147 do nothing: XmlaOlap4jCell.getDoubleValue throws NumberFormatException if this cell does not have a numeric value
 		}
+		
+		if (nonNumericValue && logger.isTraceEnabled()) {
+			logger.trace("Non-numeric cell value : {}", cell.getValue());
+		}
+
 
 		return value;
 	}
@@ -898,8 +905,6 @@ public class TableRenderer extends AbstractPivotRenderer<TableRenderContext, Tab
 				callback.renderContent(context, getLabel(context), getValue(context));
 				callback.endCell(context);
 
-				context.setColIndex(context.getColumnIndex() + span);
-
 				List<Property> properties = propertyMap.get(hierarchy);
 				if (properties != null) {
 					for (Property property : properties) {
@@ -912,7 +917,10 @@ public class TableRenderer extends AbstractPivotRenderer<TableRenderContext, Tab
 						callback.renderContent(context, getLabel(context), getValue(context));
 						callback.endCell(context);
 					}
+					context.setProperty(null);
 				}
+
+				context.setColIndex(context.getColumnIndex() + span);
 			}
 		} else if (renderLevelTitle) {
 			final Map<Integer, Level> levels = new HashMap<Integer, Level>();
