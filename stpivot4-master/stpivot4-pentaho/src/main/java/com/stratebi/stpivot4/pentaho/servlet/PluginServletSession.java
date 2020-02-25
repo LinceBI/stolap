@@ -140,7 +140,7 @@ public class PluginServletSession implements HttpSession {
 	 * @return
 	 * @see javax.servlet.http.HttpSession#getAttributeNames()
 	 */
-	public Enumeration<?> getAttributeNames() {
+	public Enumeration<String> getAttributeNames() {
 		return wrappedSession.getAttributeNames();
 	}
 
@@ -253,7 +253,7 @@ public class PluginServletSession implements HttpSession {
 				servletContext.getListener().sessionDestroyed(
 						new HttpSessionEvent(wrappedSession));
 
-				Enumeration<?> names = getAttributeNames();
+				Enumeration<String> names = getAttributeNames();
 
 				while (names.hasMoreElements()) {
 					removeAttribute((String) names.nextElement());

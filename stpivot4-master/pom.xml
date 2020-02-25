@@ -67,6 +67,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		<version.el>3.0.0</version.el>
 		<version.jsp>2.1</version.jsp>
 		<version.jstl>1.2</version.jstl>
+		<version.mail>1.6.2</version.mail>
 		<version.servlet>2.5</version.servlet>
 		<version.myfaces>2.2.9</version.myfaces>
 		<version.mojarra>2.2.13</version.mojarra>
@@ -76,7 +77,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 
 		<version.mondrian>3.14.0.0-12</version.mondrian>
 		<version.olap4j>1.2.0</version.olap4j>
-		<version.pentaho>5.4.0.1-130</version.pentaho>
+		<version.pentaho>6.1.0.17-379</version.pentaho>
 
 		<version.pivot4j>0.9</version.pivot4j>
 
