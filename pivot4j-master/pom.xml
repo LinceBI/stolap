@@ -538,7 +538,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		</repository>
 		<repository>
 			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
+			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
 		</repository>
 	</repositories>
 

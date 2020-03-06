@@ -357,7 +357,7 @@
 		</repository>
 		<repository>
 			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
+			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
 		</repository>
 
 		<repository>
