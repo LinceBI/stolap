@@ -1,0 +1,5 @@
+
+@import url("#{resource['primefaces-stolap:themeroller.css']}");
+
+@import url("#{resource['primefaces-stolap:stolap.css']}");
+

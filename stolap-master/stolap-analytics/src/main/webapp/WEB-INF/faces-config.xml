@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<application>
+		<resource-bundle>
+			<base-name>org.pivot4j.analytics.i18n.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<message-bundle>org.pivot4j.analytics.i18n.messages</message-bundle>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>ko</supported-locale>
+			<supported-locale>pt</supported-locale>
+			<supported-locale>pt_BR</supported-locale>
+			<supported-locale>fr</supported-locale>
+			<supported-locale>de</supported-locale>
+			<supported-locale>es</supported-locale>
+			<supported-locale>es_MX</supported-locale>
+			<supported-locale>hi</supported-locale>
+			<supported-locale>nl</supported-locale>
+			<supported-locale>it</supported-locale>
+			<supported-locale>ru</supported-locale>
+		</locale-config>
+	</application>
+
+	<factory>
+		<exception-handler-factory>
+			org.pivot4j.analytics.exception.Pivot4JExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+	
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.MenuButtonRenderer</renderer-type>
+			<renderer-class>com.stratebi.stolap.analytics.component.menubutton.MenuButtonRenderer</renderer-class>
+		</renderer>
+		
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccBarChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccBarChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccLineChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccLineChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccNormalizedBarChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccNormalizedBarChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccPieChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccPieChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccStackedAreaChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccStackedAreaChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+            <renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccStackedLineChartRenderer</renderer-type>
+            <renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccStackedLineChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+			<component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+			<renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccHeatGridChartRenderer</renderer-type>
+			<renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccHeatGridChartRenderer</renderer-class>
+		</renderer>
+		<renderer>
+			<component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+			<renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccBoxPlotChartRenderer</renderer-type>
+			<renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccBoxPlotChartRenderer</renderer-class>
+		</renderer>
+		<renderer>
+			<component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+			<renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccDotChartRenderer</renderer-type>
+			<renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccDotChartRenderer</renderer-class>
+		</renderer>
+		<renderer>
+			<component-family>com.stratebi.stolap.analytics.ui.chart.ccc</component-family>
+			<renderer-type>com.stratebi.stolap.analytics.ui.chart.ccc.CccWaterfallChartRenderer</renderer-type>
+			<renderer-class>com.stratebi.stolap.analytics.ui.chart.ccc.render.CccWaterfallChartRenderer</renderer-class>
+		</renderer>
+		
+	</render-kit>
+
+	<lifecycle>
+		<phase-listener>org.pivot4j.analytics.listener.LocaleInitializer</phase-listener>
+	</lifecycle>
+
+	<component>
+		<component-type>org.primefaces.component.Tree</component-type>
+		<component-class>org.pivot4j.analytics.component.tree.Tree</component-class>
+	</component>
+</faces-config>

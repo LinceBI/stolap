@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<cde-components>
+		<path>system/stolap/webapp/cde</path>
+		<path>stolap/webapp/cde</path>
+	</cde-components>
+    <new-toolbar-button>5,New STOlap View,STOlap View,plugin/stolap/faces/catalog.xhtml</new-toolbar-button>
+</settings>

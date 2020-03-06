@@ -1,13 +1,13 @@
-# STPivot4 Open Source OLAP tool
+# STOlap Open Source OLAP tool
 
 
-STPivot4 is based on the old Pivot4J project where functionality has been added, improved and extended. These techincal features are mentioned below.
+STOlap is based on the old Pivot4J project where functionality has been added, improved and extended. These techincal features are mentioned below.
 
-For additional information, you may visit STPivot4 Project page at http://bit.ly/2gdy09H
+For additional information, you may visit STOlap Project page at http://bit.ly/2gdy09H
 
 Main Features:
 
-* STPivot4 is Pentaho plugin for visualizing OLAP cubes.
+* STOlap is Pentaho plugin for visualizing OLAP cubes.
 * Deploys as Pentaho Plugin
 * Supports Mondrian 4!
 * Improves Pentaho user experience.
@@ -24,14 +24,14 @@ Main Features:
 
 ### Structure
 
-In this repository is the source code of STPivot. It is divided in two projects **stpivot4** and **stthemes-master**. 
+In this repository is the source code of STOlap. It is divided in two projects **stolap** and **stthemes-master**. 
 
 The result of compiling this project is a pentaho plugin (in .zip, .tar.gz o .rar, as you prefer).
 
-The stpivot4 project depends on stthemes-master, that means that you have to compile properly the last one, for being available for the main project, **stpivot4**. 
+The stolap project depends on stthemes-master, that means that you have to compile properly the last one, for being available for the main project, **stolap**. 
 
 ### Maven dependencies
-We use maven for dependency management, so yo have to install maven in your system in order to execute the command line instructions for playing with the stpivot4 plugin, compile changes, install a dependency, etc.
+We use maven for dependency management, so yo have to install maven in your system in order to execute the command line instructions for playing with the stolap plugin, compile changes, install a dependency, etc.
 
 The pom.xml files of each projects refers to the pentaho repository, that unfortunately is removing artifacts continuously and is changing too much lately, for this reason we try to keep update on those changes, but not always we achieve this, maybe some dependencies are referenced in our pom.xml files does not exists en pentaho repository, in that case you need to update what has changed in pentaho repo and made the changes to the affected pom.xml files. All this until there is an stable repository, 
 
@@ -41,14 +41,14 @@ Once you have maven installed go to the stthemes-master directory and execute th
 mvn compile
 mvn install
 
-Then, do the same in the stpivot4 directory 
+Then, do the same in the stolap directory 
 
 
 ### Usage
 This steps generate the artifact needed by the plugin, and the plugin in a compressed file. If every has worked fine the plugin is in:
 
-${home}/.m2/repository/com/stratebi/stpivot4/stpivot4-pentaho/1.0-SNAPSHOT/stpivot4-pentaho-1.0-SNAPSHOT-plugin.zip
+${home}/.m2/repository/com/stratebi/stolap/stolap-pentaho/1.0-SNAPSHOT/stolap-pentaho-1.0-SNAPSHOT-plugin.zip
 
 The next step: decompress this file in: pentaho-solutions/system/
 
-Restart pentaho and in the "Home" page, click "Create New" -> "STPivot4"
+Restart pentaho and in the "Home" page, click "Create New" -> "STOlap"

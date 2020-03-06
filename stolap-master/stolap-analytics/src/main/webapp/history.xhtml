@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:form id="history-form">
+	
+		<p:dialog id="history-config" header="#{msg['stolap.title.mdxhistory']}"
+			widgetVar="historyConfig" modal="true" width="730" height="305"
+			closable="true" resizable="true" dynamic="true"
+			styleClass="history-config" showEffect="fade" hideEffect="fade">
+			
+			<p:layout id="layout" style="height: 100%;">
+				<p:layoutUnit position="center" >
+															       
+						<p:dataTable id="dataListHistoryMdx" value="#{historyHandler.mdxs}" var="mdxHistory"
+									 selectionMode="single" selection="#{historyHandler.selectedMdx}" rowKey="#{mdxHistory.id}" 
+									 style="width:100%;" styleClass="no-thead" >
+				
+							<p:ajax event="rowSelect" update=":history-form:button-bar,:history-form:mdxViewer" />
+							<p:ajax event="rowUnselect" update=":history-form:button-bar,:history-form:mdxViewer"/>
+															
+							<p:column styleClass="no-border">
+								<strong>
+									<span class="ui-icon-stolap icon-history"></span>
+									<span><h:outputText value=" MDX: " /></span>
+								</strong>
+								
+							    <p:inplace editor="true">
+							         <p:inputText id="mdxHistory" value="#{mdxHistory.name}" required="true" />
+							    </p:inplace>
+							</p:column>				
+
+							<p:column styleClass="no-border tright">
+							
+					            <p:commandButton value="#{msg['stolap.delete']}" title="#{msg['stolap.delete']}" 
+				            		icon="ui-icon-trash" styleClass="bgcolor-gray"
+					            	oncomplete="PF('confirmDeleteMdxHistoryDialog').show()">
+									<f:setPropertyActionListener target="#{historyHandler.mdxHistoryToRemove}" value="#{mdxHistory}" />
+								</p:commandButton>														            	
+							</p:column>				
+							
+						</p:dataTable>
+						
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="south" resizable="true" size="120">
+
+					<p:panel styleClass="no-border">
+						<f:facet name="header">
+							<h:panelGroup layout="block">
+								<h:outputText value="#{msg['label.mdx']}" />
+							</h:panelGroup>
+						</f:facet>
+												
+						<h:outputText id="mdxViewer" value="#{historyHandler.selectedMdx.mdx}" />
+						
+					</p:panel>
+				
+				</p:layoutUnit>
+				</p:layout>				
+				
+				<f:facet name="footer">
+
+					<h:panelGroup id="button-bar" styleClass="ui-dialog-buttonpane" layout="block">
+					
+						<p:messages id="button-bar-Msgs" showDetail="true" closable="true" />
+						
+						<p:commandButton id="btnOk" value="#{msg['button.ok']}" icon="ui-icon-check" styleClass="bgcolor-green"
+							disabled="#{historyHandler.selectedMdx eq null or empty historyHandler.mdxs}" 
+							actionListener="#{historyHandler.apply}"
+							update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+							onsuccess="onViewChanged(); PF('historyConfig').hide();"/>
+																									
+						<p:commandButton id="btnApply" value="#{msg['button.apply']}" icon="ui-icon-check" styleClass="bgcolor-blue"
+							disabled="#{historyHandler.selectedMdx eq null or empty historyHandler.mdxs}"
+							actionListener="#{historyHandler.apply}"
+							update=":cube-list-form,:source-tree-form,:target-tree-form,:grid-form,:editor-form:mdx-editor,:editor-form:editor-toolbar,:filter-items-form,:toolbar-form"
+							oncomplete="onViewChanged()"/>
+																																
+						<p:commandButton id="btnClose" value="#{msg['button.close']}" styleClass="bgcolor-red"
+							icon="ui-icon-close"
+							onclick="PF('historyConfig').hide(); return false;" />
+														
+					</h:panelGroup>
+				</f:facet>
+
+		</p:dialog>
+
+		<p:confirmDialog id="confirm-delete-mdxhistory"
+			message="#{msg['stolap.confirm.mdxhistory.delete']}"
+			header="#{msg['title.confirm']}" severity="alert"
+			widgetVar="confirmDeleteMdxHistoryDialog">
+			<p:commandButton value="#{msg['button.ok']}"
+				action="#{historyHandler.removeMdxHistory}"
+				process="@this"	update=":history-form:dataListHistoryMdx,:history-form:mdxViewer,:growl,history-form:btnOk,history-form:btnApply"
+				onsuccess="PF('confirmDeleteMdxHistoryDialog').hide()" />
+			<p:commandButton value="#{msg['button.cancel']}"
+				onclick="PF('confirmDeleteMdxHistoryDialog').hide(); return false;"
+				type="button" />
+		</p:confirmDialog>
+							      					
+	</h:form>
+</ui:composition>
