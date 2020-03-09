@@ -534,6 +534,17 @@
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<repository>
+			<id>stratebi-releases</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>stratebi-snapshots</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<profiles>
 		<profile>
 			<id>mojarra</id>
