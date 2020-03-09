@@ -55,3 +55,6 @@ tmp/
 ## Misc
 *.DS_Store
 *.log
+
+## Exceptions
+!derby-foodmart.zip
