@@ -65,7 +65,7 @@ deploy:develop:mvn:
   variables:
     <<: *variables_develop
   script:
-    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/stolap-pentaho/"
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
     - "mvn deploy -Dproject.version.suffix=\"-${CI_COMMIT_REF_SLUG}-SNAPSHOT\""
   cache:
     <<: *cache
@@ -79,7 +79,7 @@ deploy:release:mvn:
   variables:
     <<: *variables_release
   script:
-    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/stolap-pentaho/"
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
     - "mvn deploy -Dproject.version.suffix="
   cache:
     <<: *cache
