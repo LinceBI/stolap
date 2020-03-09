@@ -436,4 +436,15 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<repository>
+			<id>stratebi-releases</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>stratebi-snapshots</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
