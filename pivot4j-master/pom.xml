@@ -538,26 +538,8 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		</repository>
 		<repository>
 			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
 		</repository>
 	</repositories>
 
-	<distributionManagement>
-		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Sonatype Staging</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<site>
-			<id>pivot4j</id>
-			<name>Pivot4J Home Page</name>
-			<url>${deploy.site.url}</url>
-		</site>
-		<downloadUrl>http://www.pivot4j.org/download.html</downloadUrl>
-	</distributionManagement>
 </project>

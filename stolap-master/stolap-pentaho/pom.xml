@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.stratebi.stolap</groupId>
 		<artifactId>stolap</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0${project.version.suffix}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -360,10 +360,6 @@
 			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 		<repository>
-			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
-		</repository>
-		<repository>
 			<id>pentaho-third-party</id>
 			<name>Pentaho Third Party Repository</name>
 			<url>https://nexus.pentaho.org/repository/proxy-public-3rd-party-release/</url>
@@ -374,5 +370,21 @@
 			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
+		<repository>
+			<id>stratebi</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
+		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>stratebi-releases</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>stratebi-snapshots</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

@@ -1,0 +1,87 @@
+stages:
+  - "build"
+  - "deploy"
+
+.variables: &variables
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2"
+
+.variables_develop: &variables_develop
+  <<: *variables
+
+.variables_release: &variables_release
+  <<: *variables
+
+.artifacts: &artifacts
+  expire_in: "15 mins"
+  paths:
+    - "./stthemes-master/stolap-theme/target/"
+    - "./stolap-master/stolap-analytics/target/"
+    - "./stolap-master/stolap-pentaho/target/"
+
+.cache: &cache
+  key: "${CI_COMMIT_REF_SLUG}"
+  paths:
+    - "./.m2/"
+
+.regex:
+  - &regex_version "/^v(?:[0-9]+\\.)*[0-9]+-PE_(?:[0-9.]+\\.)*[0-9]+$/"
+
+build:develop:
+  stage: "build"
+  variables:
+    <<: *variables_develop
+  script:
+    - "cd \"${CI_PROJECT_DIR:?}\"/stthemes-master/"
+    - "mvn clean compile install"
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
+    - "mvn clean compile install"
+  artifacts:
+    <<: *artifacts
+  cache:
+    <<: *cache
+  except:
+    - *regex_version
+
+build:release:
+  stage: "build"
+  variables:
+    <<: *variables_release
+  script:
+    - "cd \"${CI_PROJECT_DIR:?}\"/stthemes-master/"
+    - "mvn clean compile install"
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
+    - "mvn clean compile install"
+  artifacts:
+    <<: *artifacts
+  cache:
+    <<: *cache
+  only:
+    - *regex_version
+
+deploy:develop:mvn:
+  stage: "deploy"
+  dependencies:
+    - "build:develop"
+  variables:
+    <<: *variables_develop
+  script:
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/stolap-pentaho/"
+    - "mvn deploy -Dproject.version.suffix=\"-${CI_COMMIT_REF_SLUG}-SNAPSHOT\""
+  cache:
+    <<: *cache
+  except:
+    - *regex_version
+
+deploy:release:mvn:
+  stage: "deploy"
+  dependencies:
+    - "build:release"
+  variables:
+    <<: *variables_release
+  script:
+    - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/stolap-pentaho/"
+    - "mvn deploy -Dproject.version.suffix="
+  cache:
+    <<: *cache
+  only:
+    - *regex_version

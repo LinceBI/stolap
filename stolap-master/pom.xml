@@ -8,7 +8,7 @@
 
 	<groupId>com.stratebi.stolap</groupId>
 	<artifactId>stolap</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0${project.version.suffix}</version>
 	<name>STOlap</name>
 	<description>STOlap provides a common API for OLAP servers which can be used to build an analytical service frontend with pivot style GUI.
 
@@ -18,6 +18,8 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 	<inceptionYear>2012</inceptionYear>
 
 	<properties>
+		<project.version.suffix>-SNAPSHOT</project.version.suffix>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -430,7 +432,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		</repository>
 		<repository>
 			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
 		</repository>
 	</repositories>
 

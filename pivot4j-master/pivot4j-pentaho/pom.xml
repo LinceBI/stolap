@@ -356,11 +356,6 @@
 			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 		<repository>
-			<id>stratebi</id>
-			<url>https://repo.stratebi.com/repository/pentaho-mvn/</url>
-		</repository>
-
-		<repository>
 			<id>pentaho-third-party</id>
 			<name>Pentaho Third Party Repository</name>
 			<url>https://nexus.pentaho.org/repository/proxy-public-3rd-party-release/</url>
@@ -371,5 +366,10 @@
 			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
+		<repository>
+			<id>stratebi</id>
+			<url>https://repo.stratebi.com/repository/stratebi-mvn/</url>
+		</repository>
 	</repositories>
+
 </project>
