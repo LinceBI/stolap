@@ -17,6 +17,7 @@ stages:
     - "./stthemes-master/stolap-theme/target/"
     - "./stolap-master/stolap-analytics/target/"
     - "./stolap-master/stolap-pentaho/target/"
+    - "./.m2/repository/com/stratebi/stolap/"
 
 .cache: &cache
   key: "${CI_COMMIT_REF_SLUG}"
