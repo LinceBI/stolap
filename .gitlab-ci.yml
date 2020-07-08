@@ -37,6 +37,7 @@ build:develop:
     - "mvn clean compile install"
     - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
     - "mvn clean compile install"
+    - "ls -la ./.m2/"
   artifacts:
     <<: *artifacts
   cache:
