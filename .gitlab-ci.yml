@@ -17,7 +17,7 @@ stages:
     - "./stthemes-master/stolap-theme/target/"
     - "./stolap-master/stolap-analytics/target/"
     - "./stolap-master/stolap-pentaho/target/"
-    - "./.m2/repository/com/stratebi/stolap/"
+    - "./.m2/com/stratebi/stolap/"
 
 .cache: &cache
   key: "${CI_COMMIT_REF_SLUG}"
@@ -37,7 +37,6 @@ build:develop:
     - "mvn clean compile install"
     - "cd \"${CI_PROJECT_DIR:?}\"/stolap-master/"
     - "mvn clean compile install"
-    - "ls -la ./.m2/"
   artifacts:
     <<: *artifacts
   cache:
