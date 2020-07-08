@@ -8,7 +8,7 @@
 
 	<groupId>com.stratebi.stolap</groupId>
 	<artifactId>stolap</artifactId>
-	<version>1.0${project.version.suffix}</version>
+	<version>0.1.1${project.version.suffix}</version>
 	<name>STOlap</name>
 	<description>STOlap provides a common API for OLAP servers which can be used to build an analytical service frontend with pivot style GUI.
 
