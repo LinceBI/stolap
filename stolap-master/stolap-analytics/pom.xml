@@ -223,9 +223,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.pivot4j</groupId>
-			<artifactId>pivot4j-core</artifactId>
-			<version>${version.pivot4j}</version>
+			<groupId>com.stratebi.stolap</groupId>
+			<artifactId>stolap-core</artifactId>
+			<version>0.1.1${project.version.suffix}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>geronimo-spec-javamail</artifactId>
