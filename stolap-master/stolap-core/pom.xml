@@ -14,7 +14,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>edu.tum.cs</groupId>
+				<groupId>com.github.vbmacher</groupId>
 				<artifactId>cup-maven-plugin</artifactId>
 				<version>${version.plugin.cup}</version>
 				<executions>
@@ -290,12 +290,4 @@
 			<version>${version.freemarker}</version>
 		</dependency>
 	</dependencies>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>emustudio</id>
-			<name>emuStudio Repository</name>
-			<url>http://emustudio.sf.net/repository/</url>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
