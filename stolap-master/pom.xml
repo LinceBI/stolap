@@ -94,7 +94,7 @@ It aims to leverage mature but now discontinued JPivot project's codebase to mak
 		<version.httpclient>4.3.2</version.httpclient>
 
 		<version.hamcrest>1.3</version.hamcrest>
-		<version.htmlunit>2.25</version.htmlunit>
+		<version.htmlunit>2.15</version.htmlunit>
 		<version.jacoco>0.7.1.201405082137</version.jacoco>
 		<version.junit>4.11</version.junit>
 
