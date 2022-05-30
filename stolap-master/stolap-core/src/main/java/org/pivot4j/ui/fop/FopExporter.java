@@ -11,6 +11,7 @@ package org.pivot4j.ui.fop;
 import static org.pivot4j.ui.CellTypes.LABEL;
 import static org.pivot4j.ui.CellTypes.VALUE;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.Date;
@@ -269,7 +270,7 @@ public class FopExporter extends
 	}
 
 	protected FopFactory createFopFactory() {
-		return FopFactory.newInstance();
+		return FopFactory.newInstance(new File(".").toURI());
 	}
 
 	/**
