@@ -115,7 +115,6 @@ public class ExcelExporter extends org.pivot4j.ui.poi.ExcelExporter {
 				label="";
 			}
 			cell.setCellValue(label);
-			cell.setCellType(Cell.CELL_TYPE_STRING);
 		}
 	}
 

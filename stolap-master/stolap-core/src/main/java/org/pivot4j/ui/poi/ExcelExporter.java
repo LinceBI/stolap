@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -231,7 +231,6 @@ public class ExcelExporter extends
 			}
 
 			cell.setCellValue(label);
-			cell.setCellType(Cell.CELL_TYPE_STRING);
 		}
 	}
 
@@ -413,7 +412,7 @@ public class ExcelExporter extends
 					Color.lightGray));
 			break;
 		case HSSF:
-			style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+			style.setFillForegroundColor(HSSFColorPredefined.GREY_25_PERCENT.getIndex());
 			break;
 		default:
 			assert false;
@@ -489,7 +488,7 @@ public class ExcelExporter extends
 					Color.lightGray));
 			break;
 		case HSSF:
-			style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+			style.setFillForegroundColor(HSSFColorPredefined.GREY_25_PERCENT.getIndex());
 			break;
 		default:
 			assert false;
