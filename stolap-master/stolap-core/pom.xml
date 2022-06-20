@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.stratebi.stolap</groupId>
 		<artifactId>stolap</artifactId>
-		<version>0.1.1${project.version.suffix}</version>
+		<version>0.1.2${project.version.suffix}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
